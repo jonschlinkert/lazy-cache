@@ -1,7 +1,7 @@
 {
   "name": "lazy-cache",
   "description": "Cache requires to be lazy-loaded when needed.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "homepage": "https://github.com/jonschlinkert/lazy-cache",
   "author": {
     "name": "Jon Schlinkert",
