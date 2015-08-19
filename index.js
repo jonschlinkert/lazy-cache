@@ -19,8 +19,8 @@
 function lazyCache(fn) {
   var cache = {};
   var proxy = function (mod, name) {
-    name = name || mod;
-    Object.defineProperty(proxy, camelcase(name), {
+    name = name || camelcase(mod);
+    Object.defineProperty(proxy, name, {
       get: getter
     });
 
