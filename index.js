@@ -1,16 +1,14 @@
 'use strict';
-var colors = lazyCache(require);
-colors('ansi-yellow');
 
 /**
  * Cache results of the first function call to ensure only calling once.
  *
  * ```js
+ * var lazy = require('lazy-cache')(require);
  * // cache the call to `require('ansi-yellow')`
- * var lazy = lazyCache(require);
- * lazy('ansi-yellow');
- * // use `ansi-yello`
- * console.log(lazy.ansiYellow('this is yellow'));
+ * lazy('ansi-yellow', 'yellow');
+ * // use `ansi-yellow`
+ * console.log(lazy.yellow('this is yellow'));
  * ```
  *
  * @param  {Function} `fn` Function that will be called only once.
@@ -20,8 +18,9 @@ colors('ansi-yellow');
 
 function lazyCache(fn) {
   var cache = {};
-  var lazy = function (name) {
-    Object.defineProperty(lazy, camelcase(name), {
+  var proxy = function (mod, name) {
+    name = name || mod;
+    Object.defineProperty(proxy, camelcase(name), {
       get: getter
     });
 
@@ -30,15 +29,15 @@ function lazyCache(fn) {
         return cache[name];
       }
       try {
-        return (cache[name] = fn(name));
+        return (cache[name] = fn(mod));
       } catch (err) {
-        console.log(colors.ansiYellow(err));
-        return;
+        err.message = 'lazy-cache ' + err.message + ' ' + __filename;
+        throw err;
       }
     };
     return getter;
   };
-  return lazy;
+  return proxy;
 }
 
 /**
@@ -49,11 +48,12 @@ function lazyCache(fn) {
  */
 
 function camelcase(str) {
-  return str.replace(/[_.-](\w|$)/g, function (_, first) {
-    return first.toUpperCase();
+  if (str.length === 1) { return str.toLowerCase(); }
+  str = str.replace(/^[\W_]+|[\W_]+$/g, '').toLowerCase();
+  return str.replace(/[\W_]+(\w|$)/g, function (_, ch) {
+    return ch.toUpperCase();
   });
 }
-
 
 /**
  * Expose `lazyCache`

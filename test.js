@@ -1,5 +1,6 @@
 'use strict';
 
+/* deps: mocha */
 var assert = require('assert');
 var lazyCache = require('./');
 
@@ -35,6 +36,27 @@ describe('lazy-cache', function () {
     lazy.ansiYellow('three');
     assert.deepEqual(calls, {'ansi-yellow': 1});
     lazy.ansiYellow('four');
+    assert.deepEqual(calls, {'ansi-yellow': 1});
+  });
+
+  it('should support passing an alias as the second argument:', function () {
+    var calls = {};
+    var lazy = lazyCache(function (mod) {
+      calls[mod] = (calls[mod] || 0) + 1;
+      return require(mod);
+    });
+
+    assert.deepEqual(calls, {});
+    lazy('ansi-yellow', 'yellow');
+    assert.deepEqual(calls, {});
+
+    lazy.yellow('one');
+    assert.deepEqual(calls, {'ansi-yellow': 1});
+    lazy.yellow('two');
+    assert.deepEqual(calls, {'ansi-yellow': 1});
+    lazy.yellow('three');
+    assert.deepEqual(calls, {'ansi-yellow': 1});
+    lazy.yellow('four');
     assert.deepEqual(calls, {'ansi-yellow': 1});
   });
 });
