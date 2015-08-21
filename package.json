@@ -1,7 +1,7 @@
 {
   "name": "lazy-cache",
   "description": "Cache requires to be lazy-loaded when needed.",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "homepage": "https://github.com/jonschlinkert/lazy-cache",
   "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
   "repository": "jonschlinkert/lazy-cache",
@@ -19,14 +19,20 @@
   "scripts": {
     "test": "mocha"
   },
-  "dependencies": {
-    "ansi-yellow": "^0.1.1"
-  },
   "devDependencies": {
+    "ansi-yellow": "^0.1.1",
     "glob": "^5.0.14",
     "mocha": "*"
   },
-  "keywords": [],
+  "keywords": [
+    "cache",
+    "caching",
+    "dependencies",
+    "dependency",
+    "lazy",
+    "require",
+    "requires"
+  ],
   "verb": {
     "related": {
       "list": [
