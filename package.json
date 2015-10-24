@@ -1,7 +1,7 @@
 {
   "name": "lazy-cache",
   "description": "Cache requires to be lazy-loaded when needed.",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "homepage": "https://github.com/jonschlinkert/lazy-cache",
   "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
   "repository": "jonschlinkert/lazy-cache",
@@ -10,7 +10,8 @@
   },
   "license": "MIT",
   "files": [
-    "index.js"
+    "index.js",
+    "utils.js"
   ],
   "main": "index.js",
   "engines": {
