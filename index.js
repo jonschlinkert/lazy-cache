@@ -34,7 +34,7 @@ function lazyCache(fn) {
         err.message = 'lazy-cache ' + err.message + ' ' + __filename;
         throw err;
       }
-    };
+    }
     return getter;
   };
   return proxy;
