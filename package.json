@@ -10,8 +10,7 @@
   },
   "license": "MIT",
   "files": [
-    "index.js",
-    "utils.js"
+    "index.js"
   ],
   "main": "index.js",
   "engines": {
@@ -35,6 +34,7 @@
     "requires"
   ],
   "verb": {
+    "plugins": ["gulp-format-md"],
     "related": {
       "list": [
         "lint-deps"
