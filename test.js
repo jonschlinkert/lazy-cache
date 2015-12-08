@@ -39,6 +39,27 @@ describe('lazy-cache', function () {
     assert.deepEqual(calls, {'ansi-yellow': 1});
   });
 
+  it('should allow loading a dependency immediately with `unlazy` option', function() {
+    var calls = {};
+    var lazy = lazyCache(function(mod) {
+      calls[mod] = (calls[mod] || 0) + 1;
+      return require(mod);
+    }, {unlazy: true});
+
+    assert.deepEqual(calls, {});
+    lazy('ansi-yellow');
+    assert.deepEqual(calls, {'ansi-yellow': 1});
+
+    lazy.ansiYellow('one');
+    assert.deepEqual(calls, {'ansi-yellow': 1});
+    lazy.ansiYellow('two');
+    assert.deepEqual(calls, {'ansi-yellow': 1});
+    lazy.ansiYellow('three');
+    assert.deepEqual(calls, {'ansi-yellow': 1});
+    lazy.ansiYellow('four');
+    assert.deepEqual(calls, {'ansi-yellow': 1});
+  });
+
   it('should support passing an alias as the second argument:', function () {
     var calls = {};
     var lazy = lazyCache(function (mod) {
