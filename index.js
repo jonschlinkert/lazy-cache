@@ -16,10 +16,15 @@
  * @api public
  */
 
-function lazyCache(fn) {
+function lazyCache(fn, opts) {
+  opts = opts || {};
   var cache = {};
   var proxy = function (mod, name) {
     name = name || camelcase(mod);
+    if (opts.unlazy === true) {
+      cache[name] = fn(mod);
+    }
+
     Object.defineProperty(proxy, name, {
       enumerable: true,
       configurable: true,
@@ -30,11 +35,7 @@ function lazyCache(fn) {
       if (cache.hasOwnProperty(name)) {
         return cache[name];
       }
-      try {
-        return (cache[name] = fn(mod));
-      } catch (err) {
-        throw err;
-      }
+      return (cache[name] = fn(mod));
     }
     return getter;
   };
