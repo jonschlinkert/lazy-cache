@@ -21,6 +21,8 @@ function lazyCache(fn) {
   var proxy = function (mod, name) {
     name = name || camelcase(mod);
     Object.defineProperty(proxy, name, {
+      enumerable: true,
+      configurable: true,
       get: getter
     });
 
@@ -31,7 +33,6 @@ function lazyCache(fn) {
       try {
         return (cache[name] = fn(mod));
       } catch (err) {
-        err.message = 'lazy-cache ' + err.message + ' ' + __filename;
         throw err;
       }
     }
