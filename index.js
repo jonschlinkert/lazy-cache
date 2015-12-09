@@ -12,6 +12,8 @@
  * ```
  *
  * @param  {Function} `fn` Function that will be called only once.
+ * @param  {Object} `options` Options to determine how modules are cached.
+ * @param  {Boolean} `options.unlazy` When set to `true`, `fn` is called immediately. Defaults to `false`.
  * @return {Function} Function that can be called to get the cached function
  * @api public
  */
