@@ -4,11 +4,11 @@
  * Cache results of the first function call to ensure only calling once.
  *
  * ```js
- * var lazy = require('lazy-cache')(require);
+ * var utils = require('lazy-cache')(require);
  * // cache the call to `require('ansi-yellow')`
- * lazy('ansi-yellow', 'yellow');
+ * utils('ansi-yellow', 'yellow');
  * // use `ansi-yellow`
- * console.log(lazy.yellow('this is yellow'));
+ * console.log(utils.yellow('this is yellow'));
  * ```
  *
  * @param  {Function} `fn` Function that will be called only once.
@@ -18,10 +18,10 @@
 
 function lazyCache(fn) {
   var cache = {};
-  var proxy = function (mod, name) {
+  var proxy = function(mod, name) {
     name = name || camelcase(mod);
 
-    // checking both incase `process.env` properties are cast to `String`
+    // check both boolean and string in case `process.env` cases to string
     if (process.env.UNLAZY === 'true' || process.env.UNLAZY === true) {
       cache[name] = fn(mod);
     }
@@ -32,7 +32,7 @@ function lazyCache(fn) {
       get: getter
     });
 
-    function getter () {
+    function getter() {
       if (cache.hasOwnProperty(name)) {
         return cache[name];
       }
@@ -51,9 +51,11 @@ function lazyCache(fn) {
  */
 
 function camelcase(str) {
-  if (str.length === 1) { return str.toLowerCase(); }
+  if (str.length === 1) {
+    return str.toLowerCase();
+  }
   str = str.replace(/^[\W_]+|[\W_]+$/g, '').toLowerCase();
-  return str.replace(/[\W_]+(\w|$)/g, function (_, ch) {
+  return str.replace(/[\W_]+(\w|$)/g, function(_, ch) {
     return ch.toUpperCase();
   });
 }
