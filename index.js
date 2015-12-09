@@ -4,26 +4,25 @@
  * Cache results of the first function call to ensure only calling once.
  *
  * ```js
- * var lazy = require('lazy-cache')(require);
+ * var utils = require('lazy-cache')(require);
  * // cache the call to `require('ansi-yellow')`
- * lazy('ansi-yellow', 'yellow');
+ * utils('ansi-yellow', 'yellow');
  * // use `ansi-yellow`
- * console.log(lazy.yellow('this is yellow'));
+ * console.log(utils.yellow('this is yellow'));
  * ```
  *
  * @param  {Function} `fn` Function that will be called only once.
- * @param  {Object} `options` Options to determine how modules are cached.
- * @param  {Boolean} `options.unlazy` When set to `true`, `fn` is called immediately. Defaults to `false`.
  * @return {Function} Function that can be called to get the cached function
  * @api public
  */
 
-function lazyCache(fn, opts) {
-  opts = opts || {};
+function lazyCache(fn) {
   var cache = {};
-  var proxy = function (mod, name) {
+  var proxy = function(mod, name) {
     name = name || camelcase(mod);
-    if (opts.unlazy === true) {
+
+    // check both boolean and string in case `process.env` cases to string
+    if (process.env.UNLAZY === 'true' || process.env.UNLAZY === true) {
       cache[name] = fn(mod);
     }
 
@@ -33,7 +32,7 @@ function lazyCache(fn, opts) {
       get: getter
     });
 
-    function getter () {
+    function getter() {
       if (cache.hasOwnProperty(name)) {
         return cache[name];
       }
@@ -52,9 +51,11 @@ function lazyCache(fn, opts) {
  */
 
 function camelcase(str) {
-  if (str.length === 1) { return str.toLowerCase(); }
+  if (str.length === 1) {
+    return str.toLowerCase();
+  }
   str = str.replace(/^[\W_]+|[\W_]+$/g, '').toLowerCase();
-  return str.replace(/[\W_]+(\w|$)/g, function (_, ch) {
+  return str.replace(/[\W_]+(\w|$)/g, function(_, ch) {
     return ch.toUpperCase();
   });
 }

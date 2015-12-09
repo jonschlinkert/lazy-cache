@@ -34,11 +34,13 @@
     "requires"
   ],
   "verb": {
-    "plugins": ["gulp-format-md"],
     "related": {
       "list": [
         "lint-deps"
       ]
-    }
+    },
+    "plugins": [
+      "gulp-format-md"
+    ]
   }
 }
