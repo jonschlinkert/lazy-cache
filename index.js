@@ -12,18 +12,15 @@
  * ```
  *
  * @param  {Function} `fn` Function that will be called only once.
- * @param  {Object} `options` Options to determine how modules are cached.
- * @param  {Boolean} `options.unlazy` When set to `true`, `fn` is called immediately. Defaults to `false`.
  * @return {Function} Function that can be called to get the cached function
  * @api public
  */
 
-function lazyCache(fn, opts) {
-  opts = opts || {};
+function lazyCache(fn) {
   var cache = {};
   var proxy = function (mod, name) {
     name = name || camelcase(mod);
-    if (opts.unlazy === true) {
+    if (process.env.UNLAZY === 'true' || process.env.UNLAZY === true) {
       cache[name] = fn(mod);
     }
 
