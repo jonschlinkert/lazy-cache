@@ -20,6 +20,8 @@ function lazyCache(fn) {
   var cache = {};
   var proxy = function (mod, name) {
     name = name || camelcase(mod);
+
+    // checking both incase `process.env` properties are cast to `String`
     if (process.env.UNLAZY === 'true' || process.env.UNLAZY === true) {
       cache[name] = fn(mod);
     }
