@@ -22,6 +22,7 @@
   "devDependencies": {
     "ansi-yellow": "^0.1.1",
     "glob": "^6.0.1",
+    "gulp-format-md": "^0.1.8",
     "mocha": "*"
   },
   "keywords": [
@@ -41,6 +42,17 @@
     },
     "plugins": [
       "gulp-format-md"
+    ],
+    "toc": false,
+    "layout": "default",
+    "tasks": [
+      "readme"
+    ],
+    "lint": {
+      "reflinks": true
+    },
+    "reflinks": [
+      "verb"
     ]
   }
 }
