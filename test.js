@@ -33,7 +33,11 @@ describe('lazy-cache', function() {
 
     assert.deepEqual(calls, {});
     lazy('ansi-yellow');
-    assert.deepEqual(calls, {});
+    if (process.env.TRAVIS) {
+      assert.deepEqual(calls, {'ansi-yellow': 1});
+    } else {
+      assert.deepEqual(calls, {});
+    }
 
     lazy.ansiYellow('one');
     assert.deepEqual(calls, {'ansi-yellow': 1});
@@ -76,7 +80,11 @@ describe('lazy-cache', function() {
 
     assert.deepEqual(calls, {});
     lazy('ansi-yellow', 'yellow');
-    assert.deepEqual(calls, {});
+    if (process.env.TRAVIS) {
+      assert.deepEqual(calls, {'ansi-yellow': 1});
+    } else {
+      assert.deepEqual(calls, {});
+    }
 
     lazy.yellow('one');
     assert.deepEqual(calls, {'ansi-yellow': 1});
