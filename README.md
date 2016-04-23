@@ -1,6 +1,6 @@
 # lazy-cache [![NPM version](https://img.shields.io/npm/v/lazy-cache.svg?style=flat)](https://www.npmjs.com/package/lazy-cache) [![NPM downloads](https://img.shields.io/npm/dm/lazy-cache.svg?style=flat)](https://npmjs.org/package/lazy-cache) [![Build Status](https://img.shields.io/travis/jonschlinkert/lazy-cache.svg?style=flat)](https://travis-ci.org/jonschlinkert/lazy-cache)
 
-> Cache requires to be lazy-loaded when needed.
+Cache requires to be lazy-loaded when needed.
 
 ## Install
 
@@ -10,7 +10,9 @@ Install with [npm](https://www.npmjs.com/):
 $ npm install lazy-cache --save
 ```
 
-If you use webpack and are experiencing issues, try using [unlazy-loader](https://github.com/doowb/unlazy-loader), a webpack loader that fixes the bug that prevents webpack from working with native javascript getters.
+**webpack users**
+
+If you use webpack and are experiencing issues, try using [unlazy-loader](https://github.com/doowb/unlazy-loader), a webpack loader that _fixes the webpack bug_ that prevents webpack from working with native javascript getters.
 
 ## Usage
 
