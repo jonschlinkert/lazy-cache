@@ -4,27 +4,29 @@ require('mocha');
 var assert = require('assert');
 var lazyCache = require('./');
 
-describe('lazy-cache', function () {
+describe('lazy-cache', function() {
   afterEach(function() {
+    delete require.cache[require.resolve('./index.js')];
     process.env.UNLAZY = false;
+    lazyCache = require('./');
   });
 
-  it('should return a function that lazyily requires a module', function () {
+  it('should return a function that lazyily requires a module', function() {
     var lazy = lazyCache(require);
     var yellow = lazy('ansi-yellow');
     assert.deepEqual(typeof yellow, 'function');
     assert.deepEqual(typeof yellow(), 'function');
   });
 
-  it('should add a property to the lazy function with the camelcased name', function () {
+  it('should add a property to the lazy function with the camelcased name', function() {
     var lazy = lazyCache(require);
     lazy('ansi-yellow');
     assert.deepEqual(typeof lazy.ansiYellow, 'function');
   });
 
-  it('should only require a dependency once', function () {
+  it('should only require a dependency once', function() {
     var calls = {};
-    var lazy = lazyCache(function (mod) {
+    var lazy = lazyCache(function(mod) {
       calls[mod] = (calls[mod] || 0) + 1;
       return require(mod);
     });
@@ -65,9 +67,9 @@ describe('lazy-cache', function () {
     assert.deepEqual(calls, {'ansi-yellow': 1});
   });
 
-  it('should support passing an alias as the second argument:', function () {
+  it('should support passing an alias as the second argument:', function() {
     var calls = {};
-    var lazy = lazyCache(function (mod) {
+    var lazy = lazyCache(function(mod) {
       calls[mod] = (calls[mod] || 0) + 1;
       return require(mod);
     });

@@ -14,7 +14,6 @@
  */
 'use strict';
 
-
 /**
  * Module dependencies
  */
@@ -39,10 +38,8 @@ require = utils;
  * Lazily required module dependencies
  */
 
-
 // __(your dependencies here)__
 require('ansi-yellow')
-
 
 /**
  * Restore `require`

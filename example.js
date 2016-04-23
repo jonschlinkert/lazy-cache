@@ -7,7 +7,7 @@ utils('glob');
  */
 
 console.log(utils.glob.sync('*.js'));
-utils.glob('*.js', function (err, files) {
+utils.glob('*.js', function(err, files) {
   console.log(files.join('\n'));
 });
 
@@ -23,6 +23,6 @@ require('glob');
 require = fn;
 
 console.log(utils.glob.sync('*.js'));
-utils.glob('*.js', function (err, files) {
+utils.glob('*.js', function(err, files) {
   console.log(files.join('\n'));
 });
