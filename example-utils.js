@@ -42,7 +42,7 @@ require = utils;
 require('ansi-yellow')
 
 /**
- * Restore `require`
+ * reset `require`
  */
 
 require = fn;

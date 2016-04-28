@@ -20,10 +20,14 @@
     "test": "mocha"
   },
   "devDependencies": {
+    "ansi-cyan": "^0.1.1",
+    "ansi-magenta": "^0.1.1",
     "ansi-yellow": "^0.1.1",
     "glob": "^7.0.3",
     "gulp-format-md": "^0.1.8",
-    "mocha": "^2.4.5"
+    "mocha": "^2.4.5",
+    "object.omit": "^2.0.0",
+    "object.pick": "^1.1.2"
   },
   "keywords": [
     "cache",
