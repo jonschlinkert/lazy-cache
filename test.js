@@ -143,6 +143,13 @@ describe('lazy-cache', function() {
     assert.deepEqual(typeof lazy.objectPick, 'function');
   });
 
+  it('should load local files', function() {
+    var lazy = lazyCache(require);
+    lazy('./example-utils');
+    assert.deepEqual(typeof lazy.exampleUtils, 'function');
+    assert.deepEqual(typeof lazy.exampleUtils.ansiYellow, 'function');
+  });
+
   it('should support dot-notation when `process.env.UNLAZY` is used', function() {
     process.env.UNLAZY = true;
 
