@@ -16,38 +16,89 @@
  * @api public
  */
 
-function lazyCache(fn) {
+function lazyCache(requireFn) {
   var cache = {};
-  var proxy = function(mod, name) {
-    name = name || camelcase(mod);
 
-    // check both boolean and string in case `process.env` cases to string
-    if (process.env.UNLAZY === 'true' || process.env.UNLAZY === true || process.env.TRAVIS) {
-      cache[name] = fn(mod);
+  return function proxy(name, alias) {
+    var key = alias;
+
+    // camel-case the module `name` if `alias` is not defined
+    if (typeof key !== 'string') {
+      key = camelcase(name);
     }
 
-    Object.defineProperty(proxy, name, {
-      enumerable: true,
-      configurable: true,
-      get: getter
-    });
-
+    // create a getter to lazily invoke the module the first time it's called
     function getter() {
-      if (cache.hasOwnProperty(name)) {
-        return cache[name];
-      }
-      return (cache[name] = fn(mod));
+      return cache[key] || (cache[key] = requireFn(name));
     }
+
+    // trip the getter if `process.env.UNLAZY` is defined
+    if (unlazy(process.env)) {
+      getter();
+    }
+
+    defineGetter(proxy, key, getter);
     return getter;
   };
-  return proxy;
 }
 
 /**
- * Used to camelcase the name to be stored on the `lazy` object.
+ * Return true if `process.env.LAZY` is true, or travis is running.
+ */
+
+function unlazy(env) {
+  return env.UNLAZY === 'true' || env.UNLAZY === true || env.TRAVIS;
+}
+
+/**
+ * Define a `getter` function for `prop` on the `cache` object. Dot notation is
+ * supported.
  *
- * @param  {String} `str` String containing `_`, `.`, `-` or whitespace that will be camelcased.
- * @return {String} camelcased string.
+ * @param {Object} `cache`
+ * @param {String} `prop`
+ * @param {Function} `getter` Getter function
+ * @return {Object}
+ */
+
+function defineGetter(cache, prop, getter) {
+  if (!~prop.indexOf('.')) {
+    defineProperty(cache, prop, getter);
+    return cache;
+  }
+  var keys = prop.split('.');
+  var last = keys.pop();
+  var proxy = cache;
+  var key;
+
+  while ((key = keys.shift())) {
+    while (key.slice(-1) === '\\') {
+      key = key.slice(0, -1) + '.' + keys.shift();
+    }
+    proxy = proxy[key] || (proxy[key] = {});
+  }
+
+  defineProperty(proxy, last, getter);
+  return cache;
+}
+
+/**
+ * Define a `getter` function for `prop` on the `obj`.
+ *
+ * @param {Object} `obj`
+ * @param {String} `prop`
+ * @param {Function} `getter` Getter function
+ */
+
+function defineProperty(obj, prop, getter) {
+  Object.defineProperty(obj, prop, {
+    configurable: true,
+    enumerable: true,
+    get: getter
+  });
+}
+
+/**
+ * Camelcase the the given module `name`.
  */
 
 function camelcase(str) {
