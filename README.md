@@ -1,6 +1,6 @@
 # lazy-cache [![NPM version](https://img.shields.io/npm/v/lazy-cache.svg?style=flat)](https://www.npmjs.com/package/lazy-cache) [![NPM downloads](https://img.shields.io/npm/dm/lazy-cache.svg?style=flat)](https://npmjs.org/package/lazy-cache) [![Build Status](https://img.shields.io/travis/jonschlinkert/lazy-cache.svg?style=flat)](https://travis-ci.org/jonschlinkert/lazy-cache)
 
-Cache requires to be lazy-loaded when needed.
+> Cache requires to be lazy-loaded when needed.
 
 ## Install
 
@@ -62,6 +62,20 @@ var utils = require('lazy-cache')(require);
 // alias `ansi-yellow` as `yellow`
 utils('ansi-yellow', 'yellow');
 console.log(utils.yellow('foo'));
+```
+
+Dot notation may also be used in the alias to create an object hierarchy.
+
+**Example**
+
+```js
+var utils = require('lazy-cache')(require);
+utils('ansi-cyan', 'color.cyan');
+utils('ansi-yellow', 'color.yellow');
+utils('ansi-magenta', 'color.magenta');
+console.log(utils.color.cyan('foo'));
+console.log(utils.color.yellow('bar'));
+console.log(utils.color.magenta('baz'));
 ```
 
 ## Browserify usage
