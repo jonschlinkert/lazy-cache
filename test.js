@@ -18,6 +18,33 @@ describe('lazy-cache', function() {
     assert.deepEqual(typeof yellow(), 'function');
   });
 
+  it('should not invoke require until the module is used', function() {
+    var calls = {};
+    var lazy = lazyCache(function(name) {
+      calls[name] = (calls[name] || 0) + 1;
+      return require(name);
+    });
+
+    assert.deepEqual(calls, {});
+
+    var yellow = lazy('ansi-yellow');
+
+    if (process.env.TRAVIS) {
+      assert.deepEqual(calls, {'ansi-yellow': 1});
+    } else {
+      assert.deepEqual(calls, {});
+    }
+
+    yellow('one');
+    assert.deepEqual(calls, {'ansi-yellow': 1});
+    yellow('two');
+    assert.deepEqual(calls, {'ansi-yellow': 1});
+    yellow('three');
+    assert.deepEqual(calls, {'ansi-yellow': 1});
+    yellow('four');
+    assert.deepEqual(calls, {'ansi-yellow': 1});
+  });
+
   it('should add a property to the lazy function with the camelcased name', function() {
     var lazy = lazyCache(require);
     lazy('ansi-yellow');
