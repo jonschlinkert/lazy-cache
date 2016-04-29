@@ -62,7 +62,7 @@ function unlazy(env) {
 
 function defineGetter(cache, prop, getter) {
   if (!~prop.indexOf('.')) {
-    cache[prop] = getter;
+    defineProperty(cache, prop, getter);
     return cache;
   }
   var keys = prop.split('.');
@@ -77,13 +77,24 @@ function defineGetter(cache, prop, getter) {
     proxy = proxy[key] || (proxy[key] = {});
   }
 
-  Object.defineProperty(proxy, last, {
+  defineProperty(proxy, last, getter);
+  return cache;
+}
+
+/**
+ * Define a `getter` function for `prop` on the `obj`.
+ *
+ * @param {Object} `obj`
+ * @param {String} `prop`
+ * @param {Function} `getter` Getter function
+ */
+
+function defineProperty(obj, prop, getter) {
+  Object.defineProperty(obj, prop, {
     configurable: true,
     enumerable: true,
     get: getter
   });
-
-  return cache;
 }
 
 /**
