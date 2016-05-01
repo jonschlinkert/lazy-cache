@@ -58,5 +58,8 @@
     "reflinks": [
       "verb"
     ]
+  },
+  "dependencies": {
+    "set-getter": "^0.1.0"
   }
 }
