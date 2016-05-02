@@ -2,13 +2,13 @@
 
 require('mocha');
 var assert = require('assert');
-var lazyCache = require('./');
+var lazyCache = require('../');
 
 describe('lazy-cache', function() {
   afterEach(function() {
-    delete require.cache[require.resolve('./index.js')];
+    delete require.cache[require.resolve('../index.js')];
     process.env.UNLAZY = false;
-    lazyCache = require('./');
+    lazyCache = require('../');
   });
 
   it('should return a function that lazyily requires a module', function() {
@@ -145,9 +145,16 @@ describe('lazy-cache', function() {
 
   it('should load local files', function() {
     var lazy = lazyCache(require);
-    lazy('./example-utils');
-    assert.deepEqual(typeof lazy.exampleUtils, 'function');
-    assert.deepEqual(typeof lazy.exampleUtils.ansiYellow, 'function');
+    lazy('./fixtures/utils');
+    assert.deepEqual(typeof lazy.fixturesUtils, 'function');
+    assert.deepEqual(typeof lazy.fixturesUtils.ansiYellow, 'function');
+  });
+
+  it('should load local files with an alias', function() {
+    var lazy = lazyCache(require);
+    lazy('./fixtures/utils', 'utils');
+    assert.deepEqual(typeof lazy.utils, 'function');
+    assert.deepEqual(typeof lazy.utils.ansiYellow, 'function');
   });
 
   it('should support dot-notation when `process.env.UNLAZY` is used', function() {
