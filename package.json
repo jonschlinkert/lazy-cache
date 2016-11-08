@@ -1,9 +1,13 @@
 {
   "name": "lazy-cache",
   "description": "Cache requires to be lazy-loaded when needed.",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "homepage": "https://github.com/jonschlinkert/lazy-cache",
   "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
+  "contributors": [
+    "Brian Woodward <brian.woodward@gmail.com> (https://github.com/doowb)",
+    "Jon Schlinkert <jon.schlinkert@sellside.com> (http://twitter.com/jonschlinkert)"
+  ],
   "repository": "jonschlinkert/lazy-cache",
   "bugs": {
     "url": "https://github.com/jonschlinkert/lazy-cache/issues"
@@ -18,6 +22,9 @@
   },
   "scripts": {
     "test": "mocha"
+  },
+  "dependencies": {
+    "set-getter": "^0.1.0"
   },
   "devDependencies": {
     "ansi-cyan": "^0.1.1",
@@ -58,8 +65,5 @@
     "reflinks": [
       "verb"
     ]
-  },
-  "dependencies": {
-    "set-getter": "^0.1.0"
   }
 }
