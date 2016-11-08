@@ -38,7 +38,7 @@ lazy-cache doesn't use any "magic", it uses native, plain-vanilla, tried and tru
 
 **Faster, safer code**
 
-There main advantage to this, the main is that `require`s are loaded on demand, so only code that is actually used will ever be loaded. As a result, applications will load faster (sometimes much faster - we've seen load times drop from ~1 second to less than 50 milliseconds).
+There many advantage to this, the main is that `require`s are loaded on demand, so only code that is actually used will ever be loaded. As a result, applications will load faster (sometimes much faster - we've seen load times drop from ~1 second to less than 50 milliseconds).
 
 Moreover, in some cases this also avoids inadvertently loading libraries that execute code or modifies globals, etc.
 
