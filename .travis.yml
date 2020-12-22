@@ -5,7 +5,16 @@ os:
 language: node_js
 node_js:
   - node
+  - '14'
+  - '12'
+  - '10'
   - '6'
-  - '4'
-  - '0.12'
-  - '0.10'
+
+arch:
+  - amd64
+  - ppc64le
+
+jobs:
+  exclude:
+   - arch: ppc64le
+     os: osx
