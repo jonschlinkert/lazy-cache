@@ -19,7 +19,7 @@ var set = require('set-getter');
  */
 
 function lazyCache(requireFn) {
-  var cache = {};
+  var cache = Object.create(null);
 
   return function proxy(name, alias) {
     var key = alias;
